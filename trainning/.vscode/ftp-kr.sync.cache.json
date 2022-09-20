@@ -1,0 +1,15 @@
+{
+  "ftp://gdit_ftp@192.168.1.215:21": {
+    "htdocs": {
+      "trainning": {
+        "index.php": {
+          "type": "-",
+          "size": 20,
+          "lmtime": 1663576277134,
+          "modified": false
+        }
+      }
+    }
+  },
+  "$version": 1
+}
