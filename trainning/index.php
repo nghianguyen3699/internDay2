@@ -1,7 +1,9 @@
 <?php
 
-    $email = $_GET['email'];
-    $password = $_GET['password'];
+    session_start();
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    // print_r($_SERVER);
 
     function login($email, $password){
         $dbHostname='192.168.1.215';
@@ -22,7 +24,9 @@
             while($row = $query->fetch_assoc()) {
                 if ($email != '' || $password != '') {
                     if ($email == $row["email"] && $password == $row["password"]) {
-                        header("Location: http://cms215.dev1.local/management.php");
+                        $_SESSION['email'] = $email;
+                        $_SESSION['id'] = $row['id'];
+                        header("Location: ./management.php");
                     } else {
                         echo 'Email or Password is incorrect';
                     }
@@ -57,7 +61,7 @@
     <div class="container mx-10 my-10 min-h-screen flex flex-col items-center justify-center">
         <h1 class="mb-8">Login</h1>
         <form class="w-1/2"
-            method="GET">
+            method="POST">
             <!-- Email input -->
             <div class="form-outline mb-4">
                 <input type="email" id="email" name="email" class="form-control" />
