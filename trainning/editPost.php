@@ -1,10 +1,18 @@
 <?php
     include 'config/database.php';
+    require_once('controller/postController.php');
 
-    $post_id = $_GET['post_id'];
+    session_start();
 
-    $query = "SELECT * FROM Posts WHERE post_id = $post_id";
-    $result = $conn->query($query)->fetch_assoc();
+    if (isset($_SESSION['email']) == 0) {
+        header('Location: /');
+    }
+
+    $postId = $_GET['post_id'];
+    $post = $_POST;
+
+    $query = "SELECT * FROM Posts WHERE post_id = $postId";
+    $resultId = $conn->query($query)->fetch_assoc();
 ?>
 
 <!DOCTYPE html>
@@ -27,28 +35,33 @@
         </div>
     </div>
     <h1 class="font-bold">EDIT POST</h1>
-    <form class="w-1/2" method="POST">
+    <form class="w-1/2" action="
+        <?php
+                $var = new PostController($post['title'], $post['description'], $post['category']);
+                $result = $var->update($postId);
+        ?>" 
+        method="POST">
         <div class="form-group row">
             <label for="title" class="col-4 col-form-label">Title</label> 
             <div class="col-8">
-                <input id="title" name="title" value="<? echo $result['title'] ?>" type="text" class="form-control">
+                <input id="title" name="title" value="<? echo $resultId['title'] ?>" type="text" class="form-control">
             </div>
         </div>
         <div class="form-group row">
             <label for="description" class="col-4 col-form-label">Description</label> 
             <div class="col-8">
-                <textarea id="description" name="description" cols="40" rows="5" class="form-control"><? echo $result['description'] ?></textarea>
+                <textarea id="description" name="description" cols="40" rows="5" class="form-control"><? echo $resultId['description'] ?></textarea>
             </div>
         </div>
         <div class="form-group row">
             <label for="category" class="col-4 col-form-label">Category</label> 
             <div class="col-8">
-                <input id="category" name="category" placeholder="sport, film,...." type="text" class="form-control">
+                <input id="category" name="category" value="<? echo $resultId['category'] ?>" type="text" class="form-control">
             </div>
         </div> 
         <div class="form-group row">
             <div class="offset-4 col-8">
-                <button name="submit" type="submit" class="btn btn-primary">Update</button>
+                <button type="submit" class="btn btn-primary">Update</button>
             </div>
         </div>
     </form>

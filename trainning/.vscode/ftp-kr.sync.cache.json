@@ -2,16 +2,78 @@
   "ftp://gdit_ftp@192.168.1.215:21": {
     "htdocs": {
       "trainning": {
+        "config": {
+          "database.php": {
+            "type": "-",
+            "size": 376,
+            "lmtime": 1663813514389,
+            "modified": false
+          }
+        },
+        "controller": {
+          "postController.php": {
+            "type": "-",
+            "size": 1552,
+            "lmtime": 1663816000199,
+            "modified": false
+          }
+        },
+        "createPost.php": {
+          "type": "-",
+          "size": 2697,
+          "lmtime": 1663815757574,
+          "modified": false
+        },
+        "database.php": {
+          "type": "-",
+          "size": 376,
+          "lmtime": 0,
+          "modified": false
+        },
+        "deletePost.php": {
+          "type": "-",
+          "size": 276,
+          "lmtime": 1663813487699,
+          "modified": false
+        },
+        "editPost.php": {
+          "type": "-",
+          "size": 2811,
+          "lmtime": 1663815958968,
+          "modified": false
+        },
         "index.php": {
           "type": "-",
-          "size": 2789,
-          "lmtime": 1663576277134,
-          "modified": true
+          "size": 2993,
+          "lmtime": 1663816264230,
+          "modified": false
+        },
+        "layout": {},
+        "logout.php": {
+          "type": "-",
+          "size": 93,
+          "lmtime": 0,
+          "modified": false
         },
         "management.php": {
           "type": "-",
-          "size": 32,
+          "size": 4302,
+          "lmtime": 1663815014269,
+          "modified": false
+        },
+        "postController.php": {
+          "type": "-",
+          "size": 134,
           "lmtime": 0,
+          "modified": false
+        },
+        "session": {},
+        "template": {},
+        "templates": {},
+        "viewPost.php": {
+          "type": "-",
+          "size": 2399,
+          "lmtime": 1663814963206,
           "modified": false
         }
       }

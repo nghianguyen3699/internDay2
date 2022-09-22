@@ -1,22 +1,18 @@
 <?php
-
+    require('config/database.php');
     session_start();
+
     $email = $_POST['email'];
     $password = $_POST['password'];
-    // print_r($_SERVER);
 
     function login($email, $password){
-        $dbHostname='192.168.1.215';
-        $dbUsername='root';
-        $dbPassword='cms-8341';
-        $db='mysql';
-        $table='Users';
-
-        $conn=new mysqli($dbHostname,$dbUsername,$dbPassword,$db);
-
-        if(!$conn){
-            die('Error In connection'.mysqli_connect_error());
+        if (isset($_SESSION['email']) == 1) {
+            // echo "welcome to management page 123". "<br>";
+            header('Location: /management.php');
         }
+        $table = 'Users';
+        global $conn;
+
         $query = $conn->query("SELECT id, email, password FROM $table");
 
         if ($query->num_rows > 0) {
@@ -39,6 +35,7 @@
         mysqli_close($conn);
 
     }
+
     login($email, $password);
 
 
@@ -64,12 +61,14 @@
             method="POST">
             <!-- Email input -->
             <div class="form-outline mb-4">
+                <span class="text-sm opacity-50">luffy.1999tm@gmail.com</span>
                 <input type="email" id="email" name="email" class="form-control" />
                 <label class="form-label" for="email">Email address</label>
             </div>
 
             <!-- Password input -->
             <div class="form-outline mb-4">
+                <span class="text-sm opacity-50">abcd1234</span>
                 <input type="password" id="password" name="password" class="form-control" />
                 <label class="form-label" for="password">Password</label>
             </div>

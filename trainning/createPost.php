@@ -1,9 +1,13 @@
 <?php
     require_once('controller/postController.php');
     session_start();
+
+    if (isset($_SESSION['email']) == 0) {
+        header('Location: /');
+    }
+
     $post = $_POST;
-    // $create = false;
-    // echo $_SESSION['id'];
+
     if(isset($_SESSION['email']) == 0) {
         header('Location: index.php');
     }
@@ -25,19 +29,18 @@
 </head>
 <body>
 <div class="container mx-10 min-h-screen flex flex-col items-center justify-center">
-    <div class="<? echo ($post['title'] != '') ? '' : 'hidden' ?> notification my-10">
-        <?php
-                $var = new PostController();
-                $result = $var->create($post);
-        ?>
-    </div>
     <div class="flex items-center justify-start w-full">
         <div class="offset-4 col-8">
         <a href="/management.php" name="submit" type="submit" class="btn btn-danger">Back</a>
         </div>
     </div>
     <h1 class="font-bold">CREATE POST</h1>
-    <form class="w-1/2" method="POST">
+    <form class="w-1/2" action="
+        <?php
+                $var = new PostController($post['title'], $post['description'], $post['category']);
+                $result = $var->create($post);
+        ?>" 
+        method="POST">
         <div class="form-group row">
             <label for="title" class="col-4 col-form-label">Title</label> 
             <div class="col-8">
@@ -51,9 +54,9 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="hashtag" class="col-4 col-form-label">HashTag</label> 
+            <label for="category" class="col-4 col-form-label">Category</label> 
             <div class="col-8">
-            <input id="hashtag" name="hashtag" placeholder="#work #home #task" type="text" class="form-control">
+            <input id="category" name="category" placeholder="travel, animal,...." type="text" class="form-control">
             </div>
         </div> 
         <div class="form-group row">
