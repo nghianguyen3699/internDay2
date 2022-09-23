@@ -5,11 +5,10 @@
     $email = $_POST['email'];
     $password = $_POST['password'];
 
+    if (isset($_SESSION['email']) == 1) {
+        header('Location: /management.php');
+    }
     function login($email, $password){
-        if (isset($_SESSION['email']) == 1) {
-            // echo "welcome to management page 123". "<br>";
-            header('Location: /management.php');
-        }
         $table = 'Users';
         global $conn;
 
@@ -24,20 +23,20 @@
                         $_SESSION['id'] = $row['id'];
                         header("Location: ./management.php");
                     } else {
-                        echo 'Email or Password is incorrect';
+                        unset($_POST['email']);
+                        unset($_POST['password']);
                     }
+                } else {
+                    header("Location: /");
                 }
             }
           } else {
-            echo "0 results";
+            echo "0 user";
         }
 
-        mysqli_close($conn);
+        $conn->close();
 
     }
-
-    login($email, $password);
-
 
 
 ?>
@@ -57,7 +56,13 @@
 <body>
     <div class="container mx-10 my-10 min-h-screen flex flex-col items-center justify-center">
         <h1 class="mb-8">Login</h1>
-        <form class="w-1/2"
+        <form class="w-1/2" action="
+            <?php
+                if (isset($_POST['submit'])) {
+                    login($email, $password);
+                }
+            ?>
+        "
             method="POST">
             <!-- Email input -->
             <div class="form-outline mb-4">
@@ -74,7 +79,7 @@
             </div>
 
             <!-- Submit button -->
-            <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+            <button name="submit" type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
         </form>
     </div>
 </body>

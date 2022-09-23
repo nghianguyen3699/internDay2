@@ -1,5 +1,5 @@
 <?php
-    include 'config/database.php';
+    require_once('config/database.php');
     require_once('controller/postController.php');
 
     session_start();
@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <title>Create Post</title>
+    <title>Edit Post</title>
 </head>
 <body>
 <div class="container mx-10 min-h-screen flex flex-col items-center justify-center">
@@ -35,10 +35,12 @@
         </div>
     </div>
     <h1 class="font-bold">EDIT POST</h1>
-    <form class="w-1/2" action="
+    <form class="w-4/5" action="
         <?php
-                $var = new PostController($post['title'], $post['description'], $post['category']);
-                $result = $var->update($postId);
+                if (isset($post['submit']) == 1) {
+                    $var = new PostController($conn, $post['title'], $post['description'], $post['category']);
+                    $result = $var->update($postId);
+                }
         ?>" 
         method="POST">
         <div class="form-group row">
@@ -48,23 +50,28 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="description" class="col-4 col-form-label">Description</label> 
-            <div class="col-8">
-                <textarea id="description" name="description" cols="40" rows="5" class="form-control"><? echo $resultId['description'] ?></textarea>
-            </div>
-        </div>
-        <div class="form-group row">
             <label for="category" class="col-4 col-form-label">Category</label> 
             <div class="col-8">
                 <input id="category" name="category" value="<? echo $resultId['category'] ?>" type="text" class="form-control">
             </div>
         </div> 
         <div class="form-group row">
+            <label for="description" class="col-4 col-form-label">Description</label> 
+            <div class="col-8">
+                <textarea id="description" name="description" cols="40" rows="5" class="form-control"><? echo $resultId['description'] ?></textarea>
+            </div>
+        </div>
+        <div class="form-group row">
             <div class="offset-4 col-8">
-                <button type="submit" class="btn btn-primary">Update</button>
+                <button name="submit" type="submit" class="btn btn-primary">Update</button>
             </div>
         </div>
     </form>
 </div>
+<script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+<script>
+    var description = CKEDITOR.replace( 'description' );
+    CKFinder.setupCKEditor(description);
+</script>
 </body>
 </html>

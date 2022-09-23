@@ -52,7 +52,6 @@
             <div class="col-sm-3">
                 <h4 class="flex justify-between items-center">
                     <?php echo $_SESSION['email'] ?> 
-                    Blog
                     <a href="/logout.php" class="flex items-center justyfy-center text-white hover:text-white hover:no-underline hover:bg-red-700 rounded-lg p-2 bg-red-500">Log out</a>
             
                 </h4>
@@ -73,24 +72,30 @@
                             $post_id = $row['post_id'];
                             $title = $row["title"];
                             $description = $row["description"];
+                            $category = $row['category'];
                             $user_id = $row["user_id"];
                             $date = $row["date"];
                             echo "
-                            <div class='item_post flex items-center justify-between'> 
-                                <div class='main_post'>
-                                    <h2>$title</h2>
-                                    <h5><span class='glyphicon glyphicon-time'></span> $date.</h5>
-                                    <p>$description.</p>
-                                    <br><br>
+                                <div class='item_post flex items-start justify-between'> 
+                                    <div class='main_post w-full'>
+                                        <h2>$title</h2>
+                                        <h5><span class='glyphicon glyphicon-time'></span> $date.</h5>
+                                        <h5 class='font-bold'> $category</h5>
+                                        <div class='border w-full overflow-auto' style='height: 300px'>
+                                            <div class='m-4'>$description</div>
+                                        </div>
+                                        <br><br>
+                                    </div>
+                                    <div class='handle_option flex justify-centert mt-10'>
+                                        <a href='/viewPost.php?post_id=$post_id' class='view_btn flex justify-center items-center text-white text-lg bg-green-600 hover:bg-green-700 rounded-lg mx-2 p-2'>View</a>
+                                        <a href='/editPost.php?post_id=$post_id' class='edit_btn flex justify-center items-center text-white text-lg bg-blue-600 hover:bg-blue-700 rounded-lg mx-2 p-2'>Edit</a>
+                                        <input class='link_post hidden' value='http://cms215.dev1.local/viewPost.php?post_id=$post_id'>
+                                        <button class='copy_btn flex justify-center items-center text-white text-lg bg-yellow-600 hover:bg-yellow-700 rounded-lg mx-2 p-2'>Copy</button>
+                                        <a href='/deletePost.php?post_id=$post_id' class='delete_btn flex justify-center items-center text-white text-lg bg-red-600 hover:bg-red-700 rounded-lg mx-2 p-2'>Delete</a>
+                                    </div>
                                 </div>
-                                <div class='handle_option flex justify-center items-center'>
-                                    <a href='/viewPost.php?post_id=$post_id' class='view_btn flex justify-center items-center text-white text-lg bg-green-600 hover:bg-green-700 rounded-lg mx-2 p-2'>View</a>
-                                    <a href='/editPost.php?post_id=$post_id' class='edit_btn flex justify-center items-center text-white text-lg bg-blue-600 hover:bg-blue-700 rounded-lg mx-2 p-2'>Edit</a>
-                                    <a href='/deletePost.php?post_id=$post_id' class='delete_btn flex justify-center items-center text-white text-lg bg-red-600 hover:bg-red-700 rounded-lg mx-2 p-2'>Delete</a>
-                                </div>
-                            </div>
-                            <hr>
-                                ";
+                                <hr>
+                                    ";
                             
                         }
                     }
@@ -102,5 +107,31 @@
 <footer class="container-fluid">
 </footer>
 
+<script>
+
+function copyClipboard() {
+    const copyBtns = document.querySelectorAll(".copy_btn");
+
+    copyBtns.forEach((ele) => {
+        ele.addEventListener('click', () => {
+            let str = ele.parentNode.getElementsByTagName('input')[0].value
+            const el = document.createElement('textarea');
+            el.value = str;
+            el.setAttribute('readonly', '');
+            el.style.position = 'absolute';
+            el.style.left = '-9999px';
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            alert('Link of post was copy to clipboard!')
+
+        })
+
+    })
+}
+copyClipboard()
+
+</script>
 </body>
 </html>
